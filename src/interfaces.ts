@@ -4,8 +4,3 @@ export interface User {
   avatar_url: string
   html_url: string
 }
-
-export interface UserList {
-  users: User[];
-  totalUsers: number;
-}

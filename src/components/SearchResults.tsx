@@ -1,16 +1,34 @@
-import { User, UserList } from "../interfaces"
+import { User } from "../interfaces"
 
-export default function SearchResults({ users, totalUsers }: UserList) {
+interface SearchResultsProps {
+  users: User[]
+  totalUsers: number
+  onClick: React.MouseEventHandler<HTMLDivElement>
+}
+
+export default function SearchResults({
+  users,
+  totalUsers,
+  onClick,
+}: SearchResultsProps) {
   if (users.length === 0) {
     return <p>No users found</p>
   }
+
   return (
     <>
-      <div>Users found: {totalUsers}</div>
+      <div>
+        Users displayed: {users.length} out of {totalUsers}
+      </div>
 
       <div className="grid grid-cols-3 gap-4 mt-4">
         {users.map((user: User) => (
-          <div key={user.id} className="bg-gray-100 p-4 rounded-md">
+          <div
+            key={user.id}
+            onClick={onClick}
+            data-id={user.login}
+            className="bg-gray-100 p-4 rounded-md"
+          >
             <img
               src={user.avatar_url}
               alt={user.login}
