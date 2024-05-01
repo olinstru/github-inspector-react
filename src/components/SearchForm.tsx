@@ -12,20 +12,22 @@ export default function SearchForm({ onSubmit }: SearchFormProps) {
 
   return (
     <>
-      <form onSubmit={handleSubmit}>
-        <input
-          className="block rounded-md border p-1.5 text-gray-900 "
-          type="text"
-          placeholder="Type a name here"
-          name="search"
-          required
-        />
-        <button
-          type="submit"
-          className="text-white bg-gradient-to-r from-purple-500 via-purple-600 to-purple-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-purple-300 dark:focus:ring-purple-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2"
-        >
-          Search
-        </button>
+      <form onSubmit={handleSubmit} className="mx-auto mt-8 mb-8 max-w-xl">
+        <div className="flex items-center justify-between">
+          <input
+            className="w-full rounded-md border-gray-200 bg-white p-3 text-gray-700 shadow-sm transition focus:border-purple-600 focus:outline-none focus:ring focus:ring-purple-400"
+            type="text"
+            placeholder="Type a name here"
+            name="search"
+            required
+          />
+          <button
+            type="submit"
+            className="ml-4 px-5 py-3 text-white bg-purple-600 rounded-md shadow-sm transition hover:bg-purple-700 focus:outline-none focus:ring focus:ring-purple-400"
+          >
+            Search
+          </button>
+        </div>
       </form>
     </>
   )

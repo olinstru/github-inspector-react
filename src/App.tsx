@@ -5,11 +5,15 @@ import { User } from "./interfaces"
 import SearchForm from "./components/SearchForm"
 import UserCard from "./components/UserCard"
 import SearchResults from "./components/SearchResults"
+import { Header } from "./components/Header"
 
-function App() {
+export default function App() {
   const [users, setUsers] = useState([] as [])
   const [totalUsers, setTotalUsers] = useState<number>(0)
-  const [selectedUser, setSelectedUser] = useState([] as [])
+  const [selectedUser, setSelectedUser] = useState<User>({} as User)
+  const [selectedUserRepositories, setSelectedUserRepositories] = useState(
+    [] as []
+  )
 
   async function fetchUsers(username: string) {
     const users = await getGithubData(`search/users?q=${username}`)
@@ -22,9 +26,9 @@ function App() {
   ) {
     const username = event.currentTarget.dataset.id
     const user = await getGithubData(`users/${username}`)
-    const userRepository = await getGithubData(`users/${username}/repos`)
+    const userRepositories = await getGithubData(`users/${username}/repos`)
     setSelectedUser(user)
-    console.log(userRepository, user)
+    setSelectedUserRepositories(userRepositories)
   }
 
   function handleFormSubmit(value: string) {
@@ -35,18 +39,27 @@ function App() {
 
   return (
     <>
-      <h1 className="text-3xl font-bold">GitHub Search 🔍</h1>
+      <Header />
+
       <SearchForm onSubmit={handleFormSubmit} />
 
-      {/* <UserCard user={users} /> */}
-
-      <SearchResults
-        users={users}
-        totalUsers={totalUsers}
-        onClick={fetchSelectedUser}
-      />
+      <div className="container mx-auto px-4">
+        <div className="flex flex-col lg:flex-row">
+          <div className="lg:w-2/3">
+            <SearchResults
+              users={users}
+              totalUsers={totalUsers}
+              onClick={fetchSelectedUser}
+            />
+          </div>
+          <div className="lg:w-1/3">
+            <UserCard
+              user={selectedUser}
+              userRepositories={selectedUserRepositories}
+            />
+          </div>
+        </div>
+      </div>
     </>
   )
 }
-
-export default App
